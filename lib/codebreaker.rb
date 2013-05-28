@@ -2,14 +2,14 @@ require "codebreaker/version"
 
 module Codebreaker
   class Game
-    def initialize(limit, output = $stdout)
-      @output = output   
-      @secret_code = make_secret_code
+    def initialize(limit, output = $stdout, input = $stdin)
+      @output, @input = output, input
       @limit = limit
-      @attempts = 0
     end
 
     def start
+      @attempts = 0
+      @secret_code = make_secret_code
       @output.puts("Welcome to Codebreaker!")
       @output.puts("Enter first guess:")
     end  
@@ -40,6 +40,14 @@ module Codebreaker
       @output.puts(win ? "Congratulations Codebreaker!" : "Game Over")
       @output.puts("Attempts: #{@attempts}")
       @output.puts("Secret code was #{@secret_code}")
+
+      @output.puts("Play again?")
+      if (@input.gets == "yes") 
+        @attempts = 0
+        self.start
+      else
+        exit
+      end
     end
   end
 end
