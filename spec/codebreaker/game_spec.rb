@@ -5,15 +5,15 @@ module Codebreaker
     let (:output) { mock('output').as_null_object }
     let (:game) { Game.new(2, output) }
 
-    describe "#start" do
+    describe "#init" do
       it "sends welcome message" do
         output.should_receive(:puts).with('Welcome to Codebreaker!')
-        game.start
+        game.init
       end
 
       it "prompts the first guess" do
         output.should_receive(:puts).with('Enter first guess:')
-        game.start
+        game.init
       end
     end
 
@@ -22,7 +22,7 @@ module Codebreaker
       let (:game) { Game.new(2, output, input) }
 
       before(:each) do
-        game.start
+        game.init
         game.instance_variable_set(:@secret_code, "1234")
         input.stub(:gets).and_return("vasya", "yes")
       end

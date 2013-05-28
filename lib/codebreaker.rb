@@ -8,6 +8,16 @@ module Codebreaker
     end
 
     def start
+      init
+      loop do 
+        case a = gets.chomp
+        when "hint" then @output.puts(hint)
+        else guess(a)
+        end 
+      end
+    end
+
+    def init
       @attempts = 0
       @secret_code = make_secret_code
       @output.puts("Welcome to Codebreaker!")
@@ -27,10 +37,11 @@ module Codebreaker
           @output.print("-")
         end
       end
+      @output.puts
     end
 
     def hint
-      @secret_code[rand(1..4)]
+      @secret_code[rand(0..3)]
     end
 
     private
@@ -46,11 +57,11 @@ module Codebreaker
       @output.puts("Secret code was #{@secret_code}")
 
       @output.print("Enter your name: ")
-      save_to_file(@input.gets)
+      save_to_file(@input.gets.chomp)
       @output.puts
       @output.puts(get_statistics)
       @output.puts("Play again?")
-      if (@input.gets == "yes") 
+      if (@input.gets.chomp == "yes") 
         @attempts = 0
         self.start
       else
@@ -59,7 +70,7 @@ module Codebreaker
     end
 
     def save_to_file(name)
-      File.open("gamestat.txt", "w+") do |f|
+      File.open("gamestat.txt", "a+") do |f|
         f.puts("#{name} - #{@attempts} attempts (code: #{@secret_code})")
       end
     end
