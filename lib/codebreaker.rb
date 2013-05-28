@@ -5,6 +5,7 @@ module Codebreaker
     def initialize(output = $stdout)
       @output = output   
       @secret_code = make_secret_code
+      @attempts = 0
     end
 
     def start
@@ -13,6 +14,9 @@ module Codebreaker
     end  
 
     def guess(number)
+      @attempts += 1
+      return finish if @secret_code == number
+
       match_array = @secret_code.chars.zip(number.chars)
       match_array.take(number.length).each do |origin, guessed|
         if origin == guessed
@@ -28,6 +32,12 @@ module Codebreaker
       str = ""
       n.times { str << rand(1..6).to_s }
       str
+    end
+
+    def finish
+      @output.puts("Congratulations Codebreaker!")
+      @output.puts("Attempts: #{@attempts}")
+      @output.puts("Secret code was #{@secret_code}")
     end
   end
 end
