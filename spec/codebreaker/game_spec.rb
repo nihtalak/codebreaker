@@ -3,7 +3,7 @@ require 'spec_helper'
 module Codebreaker
   describe Game do
     let (:output) { mock('output').as_null_object }
-    let (:game) { Game.new(output) }
+    let (:game) { Game.new(2, output) }
 
     describe "#start" do
       it "sends welcome message" do
@@ -58,6 +58,21 @@ module Codebreaker
         it "sends secret code after end of the game" do
           output.should_receive(:puts).with("Secret code was 1234")
           game.guess("1234")
+        end
+      end
+
+      context "Lose" do
+        after(:each) { 2.times { game.guess("1321") } }
+        it "sends game over when number of attemps is more than limit" do
+          output.should_receive(:puts).with("Game Over")
+        end
+
+        it "sends number of attempts when codebreaker loses" do
+          output.should_receive(:puts).with("Attempts: 2")
+        end
+
+        it "sends secret code after end of the game" do
+          output.should_receive(:puts).with("Secret code was 1234")
         end
       end
     end

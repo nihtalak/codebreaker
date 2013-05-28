@@ -2,9 +2,10 @@ require "codebreaker/version"
 
 module Codebreaker
   class Game
-    def initialize(output = $stdout)
+    def initialize(limit, output = $stdout)
       @output = output   
       @secret_code = make_secret_code
+      @limit = limit
       @attempts = 0
     end
 
@@ -15,7 +16,8 @@ module Codebreaker
 
     def guess(number)
       @attempts += 1
-      return finish if @secret_code == number
+      return finish(true) if @secret_code == number
+      return finish(false) if @attempts == @limit
 
       match_array = @secret_code.chars.zip(number.chars)
       match_array.take(number.length).each do |origin, guessed|
@@ -34,8 +36,8 @@ module Codebreaker
       str
     end
 
-    def finish
-      @output.puts("Congratulations Codebreaker!")
+    def finish(win)
+      @output.puts(win ? "Congratulations Codebreaker!" : "Game Over")
       @output.puts("Attempts: #{@attempts}")
       @output.puts("Secret code was #{@secret_code}")
     end
