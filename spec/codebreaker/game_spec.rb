@@ -24,7 +24,7 @@ module Codebreaker
       before(:each) do
         game.start
         game.instance_variable_set(:@secret_code, "1234")
-        input.stub(:gets).and_return("yes")
+        input.stub(:gets).and_return("vasya", "yes")
       end
 
       shared_examples "Game Over" do
@@ -41,8 +41,19 @@ module Codebreaker
         end
 
         it "start game if codebreaker answer was yes" do
-          input.stub(:gets).and_return("yes")
           output.should_receive(:puts).with('Welcome to Codebreaker!')
+        end
+
+        it "sends 'Enter your name: ' when game is over" do
+          output.should_receive(:print).with("Enter your name: ")
+        end
+
+        it "sends statistic when codebreaker enter his name" do
+          File.stub(:open)
+          IO.stub(:read)
+
+          File.should_receive(:open).with("gamestat.txt", "w+")
+          IO.should_receive(:read).with("gamestat.txt")
         end
       end
 
@@ -87,7 +98,7 @@ module Codebreaker
         it_behaves_like "Game Over"
 
         it "exit if codebreaker's answer was no" do 
-          input.stub(:gets).and_return("no")
+          input.stub(:gets).and_return("vasya", "no")
           lambda {
             game.guess("1321")
             game.guess("1234")
@@ -110,6 +121,14 @@ module Codebreaker
             game.guess("1321")
           }.should raise_error(SystemExit)
         end
+      end
+    end
+
+    describe "#hint" do
+      before(:each) { game.instance_variable_set(:@secret_code, "1234") }
+      it "should return number included in string" do
+        num = game.hint
+        "1234".should include(num)
       end
     end
   end

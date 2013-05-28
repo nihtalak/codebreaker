@@ -29,6 +29,10 @@ module Codebreaker
       end
     end
 
+    def hint
+      @secret_code[rand(1..4)]
+    end
+
     private
     def make_secret_code(n = 4)
       str = ""
@@ -41,6 +45,10 @@ module Codebreaker
       @output.puts("Attempts: #{@attempts}")
       @output.puts("Secret code was #{@secret_code}")
 
+      @output.print("Enter your name: ")
+      save_to_file(@input.gets)
+      @output.puts
+      @output.puts(get_statistics)
       @output.puts("Play again?")
       if (@input.gets == "yes") 
         @attempts = 0
@@ -48,6 +56,16 @@ module Codebreaker
       else
         exit
       end
+    end
+
+    def save_to_file(name)
+      File.open("gamestat.txt", "w+") do |f|
+        f.puts("#{name} - #{@attempts} attempts (code: #{@secret_code})")
+      end
+    end
+
+    def get_statistics
+      IO.read("gamestat.txt")
     end
   end
 end
