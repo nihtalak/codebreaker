@@ -57,19 +57,40 @@ module Codebreaker
 
 
       context "In progress" do
+        context "Invalid data" do
+          before(:each) { output.should_receive(:puts).with("Wrong input data") }
+
+          it "sends warning message when user enters too short string" do
+            game.guess("123")
+          end
+
+          it "sends warning message when user enters too long string" do
+            game.guess("12345")
+          end
+
+          it "sends warning message if input includes wrong chars" do
+            game.guess(" a93")
+          end
+
+          it "doesnt count wrong input as guess" do
+            game.guess("12345")
+            game.guess(" a93")
+          end
+        end
+
         it "sends '+' if number is exactly guessed" do
           output.should_receive(:print).with("+").once
-          game.guess("1")
+          game.guess("1111")
         end
 
         it "sends '-' if number is guessed but in different position" do
           output.should_receive(:print).with("-").once
-          game.guess("3")
+          game.guess("1334")
         end
 
         it "sends nothing if secret code does not include that number" do
           output.should_not_receive(:print)
-          game.guess("5")
+          game.guess("5656")
         end
 
         it "sends '+-+' if 2 numbers exactly guessed and 1 include in secret code" do

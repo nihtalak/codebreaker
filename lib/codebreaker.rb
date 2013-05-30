@@ -25,6 +25,7 @@ module Codebreaker
     end  
 
     def guess(number)
+      return @output.puts("Wrong input data") unless valid?(number)
       @attempts += 1
       return finish(true) if @secret_code == number
       return finish(false) if @attempts == @limit
@@ -77,6 +78,10 @@ module Codebreaker
 
     def get_statistics
       IO.read("gamestat.txt")
+    end
+
+    def valid?(code)
+      code.match /^[1-6]{4}$/
     end
   end
 end
