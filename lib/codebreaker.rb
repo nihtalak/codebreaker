@@ -10,7 +10,7 @@ module Codebreaker
     def start
       init
       loop do 
-        case a = gets.chomp
+        case a = @input.gets.chomp
         when "hint" then @output.puts(hint)
         else guess(a)
         end 
@@ -63,7 +63,7 @@ module Codebreaker
       @output.puts("Play again?")
       if (@input.gets.chomp == "yes") 
         @attempts = 0
-        self.start
+        self.init
       else
         exit
       end

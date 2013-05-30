@@ -3,7 +3,8 @@ require 'spec_helper'
 module Codebreaker
   describe Game do
     let (:output) { mock('output').as_null_object }
-    let (:game) { Game.new(2, output) }
+      let (:input) { mock("input").as_null_object }
+    let (:game) { Game.new(2, output, input) }
 
     describe "#init" do
       it "sends welcome message" do
@@ -18,9 +19,6 @@ module Codebreaker
     end
 
     describe "#guess" do
-      let (:input) { mock("input").as_null_object }
-      let (:game) { Game.new(2, output, input) }
-
       before(:each) do
         game.init
         game.instance_variable_set(:@secret_code, "1234")
@@ -52,7 +50,7 @@ module Codebreaker
           File.stub(:open)
           IO.stub(:read)
 
-          File.should_receive(:open).with("gamestat.txt", "w+")
+          File.should_receive(:open).with("gamestat.txt", "a+")
           IO.should_receive(:read).with("gamestat.txt")
         end
       end
