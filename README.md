@@ -42,3 +42,28 @@ require "codebreaker"
 ATTEMPTS = 15
 Codebreaker::Game.new(ATTEMPTS).start
 ```
+
+
+Simple game session
+-------------------
+```
+Welcome to Codebreaker!
+Enter first guess:
+1111
+
+2222
+
+3333
++---
+4444
+-+++
+3444
+Congratulations Codebreaker!
+Attempts: 5
+Secret code was 3444
+Enter your name: Vova
+
+Vova - 5 attempts (code: 3444)
+Play again?
+no
+```
