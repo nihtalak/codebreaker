@@ -37,6 +37,7 @@ module Codebreaker
         end
       end
       @output.puts
+      @output.puts("Enter next guess: ")
     end
 
     def hint

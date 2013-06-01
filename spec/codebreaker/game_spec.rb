@@ -99,6 +99,11 @@ module Codebreaker
           output.should_receive(:print).with("-").once
           game.guess("1644")
         end
+
+        it "sends 'Enter next guess: ' after codebreakers input" do
+          output.should_receive(:puts).with("Enter next guess: ").once
+          game.guess("1644")
+        end
       end
 
       context "Win" do
