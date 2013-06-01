@@ -57,15 +57,10 @@ module Codebreaker
 
       @output.print("Enter your name: ")
       save_to_file(@input.gets.chomp)
-      @output.puts
-      @output.puts(get_statistics)
+      @output.puts("\n" + get_statistics)
+
       @output.puts("Play again?")
-      if (@input.gets.chomp == "yes") 
-        @attempts = 0
-        self.init
-      else
-        exit
-      end
+      @input.gets.chomp == "yes" ? self.init : exit
     end
 
     def save_to_file(name)
@@ -75,7 +70,7 @@ module Codebreaker
     end
 
     def get_statistics
-      IO.read("gamestat.txt")
+      IO.read("gamestat.txt") || "No games yet"
     end
 
     def valid?(code)
