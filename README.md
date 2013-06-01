@@ -51,12 +51,17 @@ Welcome to Codebreaker!
 Enter first guess:
 1111
 
+Enter next guess:
 2222
 
+Enter next guess:
 3333
 +---
+Enter next guess:
 4444
+Enter next guess:
 -+++
+Enter next guess:
 3444
 Congratulations Codebreaker!
 Attempts: 5
