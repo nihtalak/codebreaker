@@ -2,9 +2,9 @@ require 'spec_helper'
 
 module Codebreaker
   describe Game do
-    let (:output) { mock('output').as_null_object }
-    let (:input) { mock("input").as_null_object }
-    let (:game) { Game.new(2, output, input) }
+    let(:output) { mock('output').as_null_object }
+    let(:input) { mock("input").as_null_object }
+    let(:game) { Game.new(2, output, input) }
     before(:all) { File.delete("gamestat.txt") if File.exist?("gamestat.txt") }
     after(:all) { File.delete("gamestat.txt") }
 
