@@ -61,16 +61,18 @@ module Codebreaker
         context "Invalid data" do
           before(:each) { output.should_receive(:puts).with("Wrong input data") }
 
-          it "sends warning message when user enters too short string" do
-            game.guess("123")
-          end
+          context "sends warning message when string" do
+            it "is too short" do
+              game.guess("123")
+            end
 
-          it "sends warning message when user enters too long string" do
-            game.guess("12345")
-          end
+            it "is too long" do
+              game.guess("12345")
+            end
 
-          it "sends warning message if input includes wrong chars" do
-            game.guess(" a93")
+            it "includes wrong chars" do
+              game.guess(" a93")
+            end
           end
 
           it "doesnt count wrong input as guess" do
